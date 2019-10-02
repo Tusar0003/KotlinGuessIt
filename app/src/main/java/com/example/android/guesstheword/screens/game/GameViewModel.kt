@@ -12,7 +12,7 @@ class GameViewModel : ViewModel() {
 
     // The current score
 //    var score = 0
-    var score = MutableLiveData<Int>()   // MutableLiveData is a live data whose could be changed
+    var score = MutableLiveData<Int>()   // MutableLiveData is a live data whose value can be changed
 
     // The list of words - the front of the list is the next word to guess
     private lateinit var wordList: MutableList<String>
@@ -75,13 +75,13 @@ class GameViewModel : ViewModel() {
 
     fun onSkip() {
 //        score--
-        score.value = (score.value)?.minus(1)
+        score.value = (score.value)?.minus(1) // Similar to subtracting with null safety
         nextWord()
     }
 
     fun onCorrect() {
 //        score++
-        score.value = (score.value)?.plus(1)
+        score.value = (score.value)?.plus(1) // Similar to addition with null safety
         nextWord()
     }
 
