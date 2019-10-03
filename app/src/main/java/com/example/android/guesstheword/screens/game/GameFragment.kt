@@ -55,20 +55,23 @@ class GameFragment : Fragment() {
         binding.correctButton.setOnClickListener {
             viewModel.onCorrect()
 //            updateScoreText()
-            updateWordText()
+//            updateWordText()
         }
         binding.skipButton.setOnClickListener {
             viewModel.onSkip()
 //            updateScoreText()
-            updateWordText()
+//            updateWordText()
         }
 
+        viewModel.word.observe(this, Observer { newWord ->
+            binding.wordText.text = newWord
+        })
         viewModel.score.observe(this, Observer {
             binding.scoreText.text = it.toString()
         })
 
 //        updateScoreText()
-        updateWordText()
+//        updateWordText()
         return binding.root
 
     }
@@ -77,15 +80,16 @@ class GameFragment : Fragment() {
      * Called when the game is finished
      */
     private fun gameFinished() {
-        val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0) // ?: means that if value is not null then ok else pass through 0
+        val currentScore = viewModel.score.value ?: 0 // ?: means that if value is not null then ok else pass through 0
+        val action = GameFragmentDirections.actionGameToScore(currentScore)
         findNavController(this).navigate(action)
     }
 
     /** Methods for updating the UI **/
 
-    private fun updateWordText() {
-        binding.wordText.text = viewModel.word
-    }
+//    private fun updateWordText() {
+//        binding.wordText.text = viewModel.word
+//    }
 
 //    private fun updateScoreText() {
 //        binding.scoreText.text = viewModel.score.toString()
