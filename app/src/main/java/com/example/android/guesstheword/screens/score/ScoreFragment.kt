@@ -63,10 +63,17 @@ class ScoreFragment : Fragment() {
          */
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ScoreViewModel::class.java)
+        binding.scoreViewModel = viewModel
 
-        viewModel.score.observe(this, Observer {
-            binding.scoreText.text = it.toString()
-        })
+        /**
+         * It allows me to use live data to automatically update by data binding layouts
+         */
+        binding.setLifecycleOwner(this)
+
+//        viewModel.score.observe(this, Observer {
+//            binding.scoreText.text = it.toString()
+//        })
+
         viewModel.eventPlayAgain.observe(this, Observer {
             if (it) {
                 findNavController().navigate(ScoreFragmentDirections.actionRestart())
@@ -74,9 +81,9 @@ class ScoreFragment : Fragment() {
             }
         })
 
-        binding.playAgainButton.setOnClickListener {
-            viewModel.onPlayAgain()
-        }
+//        binding.playAgainButton.setOnClickListener {
+//            viewModel.onPlayAgain()
+//        }
 
         return binding.root
     }

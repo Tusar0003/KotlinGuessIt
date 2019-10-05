@@ -58,34 +58,44 @@ class GameFragment : Fragment() {
 
         Log.e(TAG, "onCreateView: Called ViewModelProviders.of!")
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+        binding.gameViewModel = viewModel
 
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
+        /**
+         * It allows me to use live data to automatically update by data binding layouts
+         */
+        binding.setLifecycleOwner(this)
+
+//        binding.correctButton.setOnClickListener {
+//            viewModel.onCorrect()
 //            updateScoreText()
 //            updateWordText()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
+//        }
+
+//        binding.skipButton.setOnClickListener {
+//            viewModel.onSkip()
 //            updateScoreText()
 //            updateWordText()
-        }
+//        }
 
-        viewModel.word.observe(this, Observer { newWord ->
-            binding.wordText.text = newWord
-        })
-        viewModel.score.observe(this, Observer {
-            binding.scoreText.text = it.toString()
-        })
+//        viewModel.word.observe(this, Observer { newWord ->
+//            binding.wordText.text = newWord
+//        })
+
+//        viewModel.score.observe(this, Observer {
+//            binding.scoreText.text = it.toString()
+//        })
+
         viewModel.eventGameFinish.observe(this, Observer {
             if (it) {
                 gameFinished()
                 viewModel.onGameFinishComplete()
             }
         })
-        viewModel.currentTime.observe(this, Observer {
-            binding.timerText.text = DateUtils.formatElapsedTime(it)
-//            binding.timerText.text = it.toString()
-        })
+
+//        viewModel.currentTime.observe(this, Observer {
+//            binding.timerText.text = DateUtils.formatElapsedTime(it)
+////            binding.timerText.text = it.toString()
+//        })
 
 //        updateScoreText()
 //        updateWordText()
